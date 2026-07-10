@@ -164,11 +164,9 @@ jobs:
             echo "Wgrano przez FTPS: ${REMOTE}"
           }
 
-          if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
-            upload_file "public/at-alerts.json" "at-alerts.json"
-          else
-            echo "Hash danych bez zmian — pomijam pełny at-alerts.json."
-          fi
+          # Dane zawsze przed meta — gwarancja spójności pliku na serwerze.
+          # Nawet gdy hash bez zmian, plik danych musi istnieć przed aktualizacją meta.
+          upload_file "public/at-alerts.json" "at-alerts.json"
 
           upload_file "public/at-alerts-meta.json" "at-alerts-meta.json"
 
