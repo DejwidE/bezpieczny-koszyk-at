@@ -1,0 +1,15 @@
+{
+  "name": "bezpieczny-koszyk-at",
+  "version": "1.0.0",
+  "description": "AGES food alert pipeline for Bezpieczny Koszyk (AT region)",
+  "type": "module",
+  "scripts": {
+    "update-at": "node server/official-alerts/at/update-at.mjs",
+    "update-at:dry": "node server/official-alerts/at/update-at.mjs --dry-run",
+    "update-at:backfill": "node server/official-alerts/at/update-at.mjs --backfill",
+    "validate-at": "node server/official-alerts/at/validate-at-alerts.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

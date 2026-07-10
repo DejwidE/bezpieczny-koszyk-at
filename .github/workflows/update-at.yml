@@ -1,0 +1,197 @@
+name: Aktualizacja alertów AT (AGES)
+
+# AT-1 — pipeline danych AT (Architecture A — statyczne URL-e plików).
+#
+# Pobiera alerty żywnościowe AGES (ages.at) przez HTML scraping TYPO3:
+#   Strona 1 (stabilny URL) → paginacja śledzona dynamicznie → strony szczegółowe
+#
+# Throttle: 2000 ms między requestami (respektuje serwer AGES).
+# Tryb inkrementalny: tylko nowe alerty są pobierane i parsowane.
+# Backfill: pełne skanowanie wszystkich stron przy pierwszym uruchomieniu.
+#
+# Cron: 45 8,20 — przesuniete wzgledem ES (30 8,20).
+
+on:
+  schedule:
+    - cron: '45 8,20 * * *'
+  workflow_dispatch:
+    inputs:
+      backfill:
+        description: 'Pobierz wszystkie alerty (backfill=true dla pierwszego uruchomienia)'
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: update-at-alerts
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update-at:
+    name: Pobierz, zwaliduj i wgraj alerty AT
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      # 1. Pobierz kod repozytorium
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Skonfiguruj Node.js 24 (brak npm dependencies — pomijamy npm ci)
+      - name: Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      # 3. Zachowaj POPRZEDNIĄ opublikowaną wersję do porównania anomalii
+      - name: Zachowaj poprzednią wersję do porównania
+        run: |
+          if [ -f public/at-alerts.json ]; then
+            cp public/at-alerts.json /tmp/at-alerts-previous.json
+            if [ -f public/at-alerts-meta.json ]; then
+              cp public/at-alerts-meta.json /tmp/at-alerts-meta-previous.json
+            fi
+            echo "Poprzednia wersja zachowana."
+          else
+            echo "Brak poprzedniej wersji (pierwsza publikacja)."
+          fi
+
+      # 4. Uruchom scraper AT — sam woła walidator przed zapisem (fail-closed).
+      #    Throttle 2000 ms/request — paginacja AGES (TYPO3 cHash dynamiczny).
+      - name: Uruchom scraper AT (walidacja przed zapisem)
+        run: |
+          if [ "${{ github.event.inputs.backfill }}" = "true" ]; then
+            node server/official-alerts/at/update-at.mjs --backfill
+          else
+            node server/official-alerts/at/update-at.mjs
+          fi
+        timeout-minutes: 45
+
+      # 5. Niezależna walidacja na poziomie workflow
+      - name: Niezależna walidacja zapisanego pliku
+        run: |
+          if [ ! -f public/at-alerts.json ]; then
+            echo "Brak pliku at-alerts.json — pomijam walidację."
+            exit 0
+          fi
+          if [ -f /tmp/at-alerts-previous.json ]; then
+            PREV_COUNT=$(node -e "
+              const f=JSON.parse(require('fs').readFileSync('/tmp/at-alerts-previous.json','utf8'));
+              console.log(f.alertCount !== undefined ? f.alertCount : '')
+            " 2>/dev/null || echo "")
+            if [ -n "$PREV_COUNT" ]; then
+              node server/official-alerts/at/validate-at-alerts.mjs --previous-count="${PREV_COUNT}"
+            else
+              node server/official-alerts/at/validate-at-alerts.mjs
+            fi
+          else
+            node server/official-alerts/at/validate-at-alerts.mjs
+          fi
+
+      # 6. Porównaj semantyczny hash
+      - name: Sprawdź zmiany w at-alerts.json
+        id: diff
+        run: |
+          OLD_HASH=$(node -e "
+            const fs=require('fs');
+            const p='/tmp/at-alerts-meta-previous.json';
+            console.log(fs.existsSync(p) ? JSON.parse(fs.readFileSync(p,'utf8')).hash || '' : '')
+          ")
+          NEW_HASH=$(node -e "
+            const f=JSON.parse(require('fs').readFileSync('./public/at-alerts-meta.json','utf8'));
+            console.log(f.hash || '')
+          ")
+          if [ -z "$NEW_HASH" ]; then
+            echo "Hash pusty — brak danych. Pomijam upload."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          elif [ -n "$OLD_HASH" ] && [ "$OLD_HASH" = "$NEW_HASH" ]; then
+            echo "Brak nowych alertów — baza jest aktualna."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            COUNT=$(node -e "
+              const f=JSON.parse(require('fs').readFileSync('./public/at-alerts.json','utf8'));
+              console.log(f.alerts.length)
+            " 2>/dev/null || echo "?")
+            echo "Wykryto zmiany — alertów: ${COUNT}"
+            echo "changed=true"   >> "$GITHUB_OUTPUT"
+            echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 7. Wgraj dane AT przez FTPS (ten sam serwer SEOHOST co pozostałe regiony)
+      #    Kolejność: DANE najpierw, potem META.
+      - name: Wgraj dane AT na serwer (FTPS)
+        env:
+          FTP_SERVER: ${{ secrets.AT_FTP_SERVER }}
+          FTP_USER:   ${{ secrets.AT_FTP_USERNAME }}
+          FTP_PASS:   ${{ secrets.AT_FTP_PASSWORD }}
+          FTP_DIR:    ${{ secrets.AT_FTP_SERVER_DIR }}
+        run: |
+          if [ -z "$FTP_SERVER" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ] || [ -z "$FTP_DIR" ]; then
+            echo "Brak kompletnej konfiguracji FTPS (AT_FTP_*) — publikacja przerwana."
+            exit 1
+          fi
+
+          INTERMEDIATE="server/official-alerts/at/certs/TrusticoRSADVSSLCA2.pem"
+          EXPECTED_SHA1="D8FC44E2B3F158C5F19656680D14C4B3BE4B4C60"
+          ACTUAL_SHA1=$(openssl x509 -in "$INTERMEDIATE" -noout -fingerprint -sha1 | cut -d= -f2 | tr -d ':')
+          if [ "$ACTUAL_SHA1" != "$EXPECTED_SHA1" ]; then
+            echo "Nieprawidłowy fingerprint certyfikatu pośredniego — publikacja przerwana."
+            exit 1
+          fi
+          FTPS_CA_BUNDLE="$RUNNER_TEMP/at-ftps-ca-bundle.pem"
+          cat /etc/ssl/certs/ca-certificates.crt "$INTERMEDIATE" > "$FTPS_CA_BUNDLE"
+
+          upload_file() {
+            local LOCAL="$1"
+            local REMOTE="$2"
+            echo "Wgrywam ${LOCAL} → ftp://$FTP_SERVER${FTP_DIR}${REMOTE}"
+            curl --ssl-reqd \
+              --cacert "$FTPS_CA_BUNDLE" \
+              --ftp-create-dirs \
+              --connect-timeout 30 \
+              --max-time 60 \
+              --retry 2 \
+              --retry-delay 5 \
+              -u "$FTP_USER:$FTP_PASS" \
+              -T "$LOCAL" \
+              "ftp://$FTP_SERVER${FTP_DIR}${REMOTE}" \
+              --silent --show-error
+            echo "Wgrano przez FTPS: ${REMOTE}"
+          }
+
+          if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
+            upload_file "public/at-alerts.json" "at-alerts.json"
+          else
+            echo "Hash danych bez zmian — pomijam pełny at-alerts.json."
+          fi
+
+          upload_file "public/at-alerts-meta.json" "at-alerts-meta.json"
+
+      # 8. Commit do repo tylko gdy dane się zmieniły
+      - name: Zapisz zaktualizowaną bazę w repo
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "AT-Alerts-Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/at-alerts.json public/at-alerts-meta.json
+          git commit -m "chore(at-alerts): aktualizacja alertów AT $(date '+%Y-%m-%d') [${{ steps.diff.outputs.count }} wpisów]"
+          git push
+
+      # 9. Podsumowanie
+      - name: Podsumowanie
+        if: always()
+        run: |
+          if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
+            echo "### Baza AT zaktualizowana" >> $GITHUB_STEP_SUMMARY
+            echo "- Data: **$(date '+%Y-%m-%d %H:%M UTC')**" >> $GITHUB_STEP_SUMMARY
+            echo "- Alertów w bazie: **${{ steps.diff.outputs.count }}**" >> $GITHUB_STEP_SUMMARY
+            echo "- Źródło: AGES (ages.at — HTML scraper TYPO3)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Baza AT bez zmian" >> $GITHUB_STEP_SUMMARY
+            echo "$(date '+%Y-%m-%d %H:%M UTC') — baza aktualna. Meta wgrane." >> $GITHUB_STEP_SUMMARY
+          fi
