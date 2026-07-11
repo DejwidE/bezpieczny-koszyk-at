@@ -1,15 +1,15 @@
-name: Aktualizacja alertów AT (AGES)
+name: Aktualizacja alertĂłw AT (AGES)
 
-# AT-1 — pipeline danych AT (Architecture A — statyczne URL-e plików).
+# AT-1 â€” pipeline danych AT (Architecture A â€” statyczne URL-e plikĂłw).
 #
-# Pobiera alerty żywnościowe AGES (ages.at) przez HTML scraping TYPO3:
-#   Strona 1 (stabilny URL) → paginacja śledzona dynamicznie → strony szczegółowe
+# Pobiera alerty ĹĽywnoĹ›ciowe AGES (ages.at) przez HTML scraping TYPO3:
+#   Strona 1 (stabilny URL) â†’ paginacja Ĺ›ledzona dynamicznie â†’ strony szczegĂłĹ‚owe
 #
-# Throttle: 2000 ms między requestami (respektuje serwer AGES).
-# Tryb inkrementalny: tylko nowe alerty są pobierane i parsowane.
-# Backfill: pełne skanowanie wszystkich stron przy pierwszym uruchomieniu.
+# Throttle: 2000 ms miÄ™dzy requestami (respektuje serwer AGES).
+# Tryb inkrementalny: tylko nowe alerty sÄ… pobierane i parsowane.
+# Backfill: peĹ‚ne skanowanie wszystkich stron przy pierwszym uruchomieniu.
 #
-# Cron: 45 8,20 — przesuniete wzgledem ES (30 8,20).
+# Cron: 45 8,20 â€” przesuniete wzgledem ES (30 8,20).
 
 on:
   schedule:
@@ -42,14 +42,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Skonfiguruj Node.js 24 (brak npm dependencies — pomijamy npm ci)
+      # 2. Skonfiguruj Node.js 24 (brak npm dependencies â€” pomijamy npm ci)
       - name: Node.js 24
         uses: actions/setup-node@v6
         with:
           node-version: '24'
 
-      # 3. Zachowaj POPRZEDNIĄ opublikowaną wersję do porównania anomalii
-      - name: Zachowaj poprzednią wersję do porównania
+      # 3. Zachowaj POPRZEDNIÄ„ opublikowanÄ… wersjÄ™ do porĂłwnania anomalii
+      - name: Zachowaj poprzedniÄ… wersjÄ™ do porĂłwnania
         run: |
           if [ -f public/at-alerts.json ]; then
             cp public/at-alerts.json /tmp/at-alerts-previous.json
@@ -61,8 +61,8 @@ jobs:
             echo "Brak poprzedniej wersji (pierwsza publikacja)."
           fi
 
-      # 4. Uruchom scraper AT — sam woła walidator przed zapisem (fail-closed).
-      #    Throttle 2000 ms/request — paginacja AGES (TYPO3 cHash dynamiczny).
+      # 4. Uruchom scraper AT â€” sam woĹ‚a walidator przed zapisem (fail-closed).
+      #    Throttle 2000 ms/request â€” paginacja AGES (TYPO3 cHash dynamiczny).
       - name: Uruchom scraper AT (walidacja przed zapisem)
         run: |
           if [ "${{ github.event.inputs.backfill }}" = "true" ]; then
@@ -72,11 +72,11 @@ jobs:
           fi
         timeout-minutes: 45
 
-      # 5. Niezależna walidacja na poziomie workflow
-      - name: Niezależna walidacja zapisanego pliku
+      # 5. NiezaleĹĽna walidacja na poziomie workflow
+      - name: NiezaleĹĽna walidacja zapisanego pliku
         run: |
           if [ ! -f public/at-alerts.json ]; then
-            echo "Brak pliku at-alerts.json — pomijam walidację."
+            echo "Brak pliku at-alerts.json â€” pomijam walidacjÄ™."
             exit 0
           fi
           if [ -f /tmp/at-alerts-previous.json ]; then
@@ -93,8 +93,8 @@ jobs:
             node server/official-alerts/at/validate-at-alerts.mjs
           fi
 
-      # 6. Porównaj semantyczny hash
-      - name: Sprawdź zmiany w at-alerts.json
+      # 6. PorĂłwnaj semantyczny hash
+      - name: SprawdĹş zmiany w at-alerts.json
         id: diff
         run: |
           OLD_HASH=$(node -e "
@@ -107,23 +107,23 @@ jobs:
             console.log(f.hash || '')
           ")
           if [ -z "$NEW_HASH" ]; then
-            echo "Hash pusty — brak danych. Pomijam upload."
+            echo "Hash pusty â€” brak danych. Pomijam upload."
             echo "changed=false" >> "$GITHUB_OUTPUT"
           elif [ -n "$OLD_HASH" ] && [ "$OLD_HASH" = "$NEW_HASH" ]; then
-            echo "Brak nowych alertów — baza jest aktualna."
+            echo "Brak nowych alertĂłw â€” baza jest aktualna."
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             COUNT=$(node -e "
               const f=JSON.parse(require('fs').readFileSync('./public/at-alerts.json','utf8'));
               console.log(f.alerts.length)
             " 2>/dev/null || echo "?")
-            echo "Wykryto zmiany — alertów: ${COUNT}"
+            echo "Wykryto zmiany â€” alertĂłw: ${COUNT}"
             echo "changed=true"   >> "$GITHUB_OUTPUT"
             echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
           fi
 
-      # 7. Wgraj dane AT przez FTPS (ten sam serwer SEOHOST co pozostałe regiony)
-      #    Kolejność: DANE najpierw, potem META.
+      # 7. Wgraj dane AT przez FTPS (ten sam serwer SEOHOST co pozostaĹ‚e regiony)
+      #    KolejnoĹ›Ä‡: DANE najpierw, potem META.
       - name: Wgraj dane AT na serwer (FTPS)
         env:
           FTP_SERVER: ${{ secrets.AT_FTP_SERVER }}
@@ -132,7 +132,7 @@ jobs:
           FTP_DIR:    ${{ secrets.AT_FTP_SERVER_DIR }}
         run: |
           if [ -z "$FTP_SERVER" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ] || [ -z "$FTP_DIR" ]; then
-            echo "Brak kompletnej konfiguracji FTPS (AT_FTP_*) — publikacja przerwana."
+            echo "Brak kompletnej konfiguracji FTPS (AT_FTP_*) â€” publikacja przerwana."
             exit 1
           fi
 
@@ -140,7 +140,7 @@ jobs:
           EXPECTED_SHA1="D8FC44E2B3F158C5F19656680D14C4B3BE4B4C60"
           ACTUAL_SHA1=$(openssl x509 -in "$INTERMEDIATE" -noout -fingerprint -sha1 | cut -d= -f2 | tr -d ':')
           if [ "$ACTUAL_SHA1" != "$EXPECTED_SHA1" ]; then
-            echo "Nieprawidłowy fingerprint certyfikatu pośredniego — publikacja przerwana."
+            echo "NieprawidĹ‚owy fingerprint certyfikatu poĹ›redniego â€” publikacja przerwana."
             exit 1
           fi
           FTPS_CA_BUNDLE="$RUNNER_TEMP/at-ftps-ca-bundle.pem"
@@ -149,7 +149,7 @@ jobs:
           upload_file() {
             local LOCAL="$1"
             local REMOTE="$2"
-            echo "Wgrywam ${LOCAL} → ftp://$FTP_SERVER${FTP_DIR}${REMOTE}"
+            echo "Wgrywam ${LOCAL} â†’ ftp://$FTP_SERVER${FTP_DIR}${REMOTE}"
             curl --ssl-reqd \
               --cacert "$FTPS_CA_BUNDLE" \
               --ftp-create-dirs \
@@ -164,32 +164,37 @@ jobs:
             echo "Wgrano przez FTPS: ${REMOTE}"
           }
 
-          # Dane zawsze przed meta — gwarancja spójności pliku na serwerze.
-          # Nawet gdy hash bez zmian, plik danych musi istnieć przed aktualizacją meta.
+          # Dane zawsze przed meta â€” gwarancja spĂłjnoĹ›ci pliku na serwerze.
+          # Nawet gdy hash bez zmian, plik danych musi istnieÄ‡ przed aktualizacjÄ… meta.
           upload_file "public/at-alerts.json" "at-alerts.json"
 
           upload_file "public/at-alerts-meta.json" "at-alerts-meta.json"
 
-      # 8. Commit do repo tylko gdy dane się zmieniły
-      - name: Zapisz zaktualizowaną bazę w repo
+      # 8. Commit do repo tylko gdy dane siÄ™ zmieniĹ‚y
+      - name: Zapisz zaktualizowanÄ… bazÄ™ w repo
         if: steps.diff.outputs.changed == 'true'
         run: |
           git config user.name  "AT-Alerts-Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/at-alerts.json public/at-alerts-meta.json
-          git commit -m "chore(at-alerts): aktualizacja alertów AT $(date '+%Y-%m-%d') [${{ steps.diff.outputs.count }} wpisów]"
+          git commit -m "chore(at-alerts): aktualizacja alertĂłw AT $(date '+%Y-%m-%d') [${{ steps.diff.outputs.count }} wpisĂłw]"
           git push
 
       # 9. Podsumowanie
+      - name: Watchdog aktualności AT (tylko ostrzeżenia dla nas)
+        if: always()
+        continue-on-error: true
+        run: |
+          node scripts/official-alerts-watchdog.mjs --region=AT --data=public/at-alerts.json --meta=public/at-alerts-meta.json --previous=/tmp/at-alerts-previous.json --previous-meta=/tmp/at-alerts-meta-previous.json --max-age-hours=96 --min-count=1 --drop-warn-percent=25
       - name: Podsumowanie
         if: always()
         run: |
           if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
             echo "### Baza AT zaktualizowana" >> $GITHUB_STEP_SUMMARY
             echo "- Data: **$(date '+%Y-%m-%d %H:%M UTC')**" >> $GITHUB_STEP_SUMMARY
-            echo "- Alertów w bazie: **${{ steps.diff.outputs.count }}**" >> $GITHUB_STEP_SUMMARY
-            echo "- Źródło: AGES (ages.at — HTML scraper TYPO3)" >> $GITHUB_STEP_SUMMARY
+            echo "- AlertĂłw w bazie: **${{ steps.diff.outputs.count }}**" >> $GITHUB_STEP_SUMMARY
+            echo "- ĹąrĂłdĹ‚o: AGES (ages.at â€” HTML scraper TYPO3)" >> $GITHUB_STEP_SUMMARY
           else
             echo "### Baza AT bez zmian" >> $GITHUB_STEP_SUMMARY
-            echo "$(date '+%Y-%m-%d %H:%M UTC') — baza aktualna. Meta wgrane." >> $GITHUB_STEP_SUMMARY
+            echo "$(date '+%Y-%m-%d %H:%M UTC') â€” baza aktualna. Meta wgrane." >> $GITHUB_STEP_SUMMARY
           fi
