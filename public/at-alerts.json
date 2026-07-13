@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-10T12:19:52.857Z",
+  "generatedAt": "2026-07-13T21:36:10.370Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 18,
+  "alertCount": 20,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -291,6 +291,40 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/inzersdorfer-junior-gefluegel-aufstrich-80g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-1001-delights-dubai-style-schokolade-pistazien-eis-500ml-300g",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "De Jongs Ijs",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "D2W50J25R1"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/1001-delights-dubai-style-schokolade-pistazien-eis-500ml-300g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "Gustibus Alimentari S.r.l",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "LG 15/24"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
