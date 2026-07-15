@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-13T21:36:10.370Z",
+  "generatedAt": "2026-07-15T10:28:47.585Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 20,
+  "alertCount": 22,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -325,6 +325,40 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-back-mit-mandeln-gerieben-200g",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "ting & Analyse",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "L26166V571"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/back-mit-mandeln-gerieben-200g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-billa-immer-gut-chili-cheese-nuggets-250g",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "GoodLife Foods Boxtel",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "L5069"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-immer-gut-chili-cheese-nuggets-250g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
