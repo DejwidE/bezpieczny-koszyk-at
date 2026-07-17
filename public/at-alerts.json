@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-15T10:28:47.585Z",
+  "generatedAt": "2026-07-17T21:33:42.314Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 22,
+  "alertCount": 23,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -359,6 +359,23 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-immer-gut-chili-cheese-nuggets-250g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "Jütro Tiefkühlkost GmbH & Co. KG",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "L180426H3, L180426L3, L190426L3 und L190426N3"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
