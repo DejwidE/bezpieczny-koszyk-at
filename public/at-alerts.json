@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-19T10:15:13.200Z",
+  "generatedAt": "2026-07-24T21:45:29.760Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 24,
+  "alertCount": 25,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -391,6 +391,23 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/dmbio-cashewmus-himbeere",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g-1",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "Jütro Tiefkühlkost GmbH & Co. KG",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "L220226P3, L220226G3, L220226Z3, L220226D3, L230226D3, L030326Z3, L030326H3, L030326W3, L150426P3, L180426H3, L180426L3, L190426L3, L190426N3"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g-1",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
