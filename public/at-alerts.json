@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-24T21:45:29.760Z",
+  "generatedAt": "2026-07-28T11:02:14.996Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 25,
+  "alertCount": 27,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -408,6 +408,38 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g-1",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-billa-bio-huehnersuppe-6-wuerfel-66g",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "Landena Wels GmbH",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "L6090853390, L6159863933, L6196870212"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-bio-huehnersuppe-6-wuerfel-66g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-dmbio-cashewmus-himbeere-1",
+      "title": "Details",
+      "productName": "warnungen & Produktrückrufe - AGES",
+      "brand": "ting & Analyse",
+      "hazardType": "other",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/dmbio-cashewmus-himbeere-1",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
