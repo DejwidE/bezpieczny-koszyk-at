@@ -123,6 +123,7 @@ const HTML_ENTITY_MAP = {
 }
 
 function stripHtml(html) {
+  if (!html) return ''
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
@@ -145,7 +146,7 @@ const HAZARD_PATTERNS = [
     'physical',
   ],
   [
-    /salmonell|listerien|listeria|e\.?\s*coli|campylobacter|stec|shiga|clostridium|bacillus\s+cereus|histamin|norovirus|hepatitis|yersin|rotavirus|schimmelpizcpilz|schimmelpilz|mykotoxin|toxin|aflatoxin/i,
+    /salmonell|listerien|listeria|e\.?\s*coli|campylobacter|stec|shiga|clostridium|bacillus\s+cereus|histamin|norovir|hepatitis|yersin|rotavirus|schimmelpizcpilz|schimmelpilz|mykotoxin|toxin|aflatoxin/i,
     'microbiological',
   ],
   [
@@ -218,12 +219,15 @@ function parseCategoryPage(html, currentPageUrl) {
     if (!slug || seenSlugs.has(slug)) continue
     seenSlugs.add(slug)
 
-    // Znajdź tekst anchra jako tytuł (do 200 znaków po href, aż do </a>)
-    const afterHref = html.indexOf('>', m.index)
-    const closeA = html.indexOf('</a>', afterHref)
-    const title = afterHref !== -1 && closeA !== -1
-      ? stripHtml(html.slice(afterHref + 1, closeA)).replace(/\s+/g, ' ').trim()
-      : null
+    // Wyciągnij title attribute z <a> — AGES używa title="Nazwa produktu" zamiast tekstu anchra
+    const tagStart = html.lastIndexOf('<a', m.index)
+    const tagEnd   = html.indexOf('>', m.index)
+    let title = null
+    if (tagStart !== -1 && tagEnd !== -1) {
+      const tagHtml = html.slice(tagStart, tagEnd + 1)
+      const titleAttrM = tagHtml.match(/\btitle="([^"]+)"/)
+      if (titleAttrM) title = titleAttrM[1].replace(/\s+/g, ' ').trim() || null
+    }
 
     // Szukaj daty w okolicach linka (±150 znaków)
     const context = html.slice(Math.max(0, m.index - 50), m.index + 300)
@@ -239,13 +243,13 @@ function parseCategoryPage(html, currentPageUrl) {
   }
 
   // Znajdź link do następnej strony paginacji
-  // TYPO3: href="...?tx_agesrecall_pi1%5Bcat%5D=8&tx_agesrecall_pi1%5Bpage%5D=N&cHash=..."
-  const NEXT_PAGE_RE = /href="([^"]*tx_agesrecall_pi1%5Bcat%5D=8[^"]*tx_agesrecall_pi1%5Bpage%5D=(\d+)[^"]*cHash=[^"]*)"/gi
+  // TYPO3: href="...?tx_agesrecall_pi1%5Bpage%5D=N&cHash=..." (bez cat=8 w URL paginacji)
+  const NEXT_PAGE_RE = /href="([^"]*tx_agesrecall_pi1(?:%5B|\[)page(?:%5D|\])=(\d+)[^"]*cHash=[^"]*)"/gi
   let nextPageUrl = null
   let maxPageNum = 0
 
   // Wyciągnij aktualny numer strony z URL
-  const currentPageM = currentPageUrl.match(/tx_agesrecall_pi1%5Bpage%5D=(\d+)/)
+  const currentPageM = currentPageUrl.match(/tx_agesrecall_pi1(?:%5B|\[)page(?:%5D|\])=(\d+)/)
   const currentPage = currentPageM ? parseInt(currentPageM[1], 10) : 1
 
   while ((m = NEXT_PAGE_RE.exec(html)) !== null) {
@@ -256,31 +260,34 @@ function parseCategoryPage(html, currentPageUrl) {
     }
   }
 
-  // Fallback: szukaj także kodowanego ampersanda w href
-  if (!nextPageUrl) {
-    const NEXT_PAGE_RE2 = /href="([^"]*tx_agesrecall_pi1\[cat\]=8[^"]*tx_agesrecall_pi1\[page\]=(\d+)[^"]*)"/gi
-    while ((m = NEXT_PAGE_RE2.exec(html)) !== null) {
-      const pageNum = parseInt(m[2], 10)
-      if (pageNum > currentPage && pageNum > maxPageNum) {
-        maxPageNum = pageNum
-        nextPageUrl = `${BASE_URL}${m[1].replace(/&amp;/g, '&')}`
-      }
-    }
-  }
-
   return { items, nextPageUrl }
 }
 
 // ── Parsowanie strony szczegółowej alertu ─────────────────────────────────────
 
 function extractField(plaintext, ...labels) {
+  const lines = plaintext.split('\n')
   for (const label of labels) {
     const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    const re = new RegExp(`^\\s*${escaped}\\s*:?\\s*(.{2,200})`, 'im')
-    const m = plaintext.match(re)
-    if (!m) continue
-    const value = m[1].split('\n')[0].trim()
-    if (value.length >= 2 && value.length <= 200) return value
+    // Try same-line format: "Label: value"
+    const sameLineRe = new RegExp(`^\\s*${escaped}\\s*:\\s*(.{2,200})$`, 'im')
+    const sameLineM = plaintext.match(sameLineRe)
+    if (sameLineM) {
+      const v = sameLineM[1].split('\n')[0].trim()
+      if (v.length >= 2 && v.length <= 200) return v
+    }
+    // Try table format: label on its own line, value on the next non-empty line
+    const lowerLabel = label.toLowerCase()
+    for (let i = 0; i < lines.length - 1; i++) {
+      const line = lines[i].trim()
+      if (!line) continue
+      if (line.toLowerCase() === lowerLabel || line.toLowerCase() === lowerLabel + ':') {
+        for (let j = i + 1; j < lines.length; j++) {
+          const nextLine = lines[j].trim()
+          if (nextLine && nextLine.length >= 2 && nextLine.length <= 200) return nextLine
+        }
+      }
+    }
   }
   return null
 }
@@ -310,27 +317,30 @@ function parseAgesAlertPage(html, listingTitle) {
     'Hersteller',
     'Importeur',
     'Inverkehrbringer',
+    'In Verkehr gebracht von',
     'Marke',
     'Firma',
   )
 
-  // Batch: numer partii lub MHD (często jedno pole łączone)
+  // Batch: numer partii — split po przecinkach i "und"
   const batchRaw = extractField(text,
     'Chargennummer',
     'Chargenbezeichnung',
     'Losnummer',
     'Los-Nummer',
-    'Mindesthaltbarkeitsdatum (MHD)',
-    'Mindesthaltbarkeitsdatum',
-    'MHD',
-    'Haltbar bis',
-    'Verfallsdatum',
     'Charge',
   )
-  const batchNumbers = batchRaw ? [batchRaw] : []
+  const batchNumbers = batchRaw
+    ? batchRaw
+        .split(/,\s*|\s+und\s+/i)
+        .map(s => s.trim())
+        .filter(s => s.length >= 2 && s.length <= 60)
+    : []
 
-  // Data publikacji ze strony szczegółowej
+  // Data publikacji ze strony szczegółowej — AGES używa "Lebensmittel-Rückruf" jako etykiety daty
   const dateRaw = extractField(text,
+    'Lebensmittel-Rückruf',
+    'Lebensmittel-Warnung',
     'Veröffentlicht am',
     'Datum',
     'Veröffentlichungsdatum',
@@ -340,11 +350,11 @@ function parseAgesAlertPage(html, listingTitle) {
 
   const pageHeading = extractPageTitle(html)
   const titleForClassify = listingTitle || pageHeading || ''
-  const hazardType        = classifyHazardType(titleForClassify + ' ' + text.slice(0, 500))
+  const hazardType        = classifyHazardType(titleForClassify + ' ' + text)
   const hazardDescription = extractHazardDescription(titleForClassify)
 
   return {
-    productName:       productName ?? null,
+    productName:       productName ?? listingTitle ?? pageHeading ?? null,
     brand:             brand ?? null,
     batchNumbers,
     hazardType,

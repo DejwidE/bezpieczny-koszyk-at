@@ -5,16 +5,16 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-28T11:02:14.996Z",
+  "generatedAt": "2026-07-30T19:01:23.248Z",
   "updatedBy": "update-at.mjs",
   "alertCount": 27,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "ting & Analyse",
-      "hazardType": "other",
+      "title": "SPAR Natur*pur by NENI Bio-Hummus natur 125g",
+      "productName": "SPAR Natur*pur by NENI Bio-Hummus natur 125g",
+      "brand": "SPAR",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [],
       "eans": [],
@@ -26,10 +26,10 @@
     },
     {
       "id": "at-sichuan-pepper-powder",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "ting & Analyse",
-      "hazardType": "other",
+      "title": "Sichuan Pepper Powder",
+      "productName": "Sichuan Pepper Powder",
+      "brand": "Asia Shop",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [],
       "eans": [],
@@ -41,10 +41,10 @@
     },
     {
       "id": "at-turmeric-haldi-powder-kurkuma-und-sichuan-pepper-salt",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "ting & Analyse",
-      "hazardType": "other",
+      "title": "Turmeric/Haldi Powder Kurkuma und Sichuan Pepper Salt",
+      "productName": "Turmeric/Haldi Powder Kurkuma mit MHD 01.04.2028",
+      "brand": "Asia Shop",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [],
       "eans": [],
@@ -56,13 +56,14 @@
     },
     {
       "id": "at-billa-immer-gut-8-kraeuter-50g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "BILLA IMMER GUT 8 KRÄUTER 50G",
+      "productName": "BILLA IMMER GUT 8 KRÄUTER 50G",
       "brand": "Daregal S.A.S.",
-      "hazardType": "other",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
-        "26CS000064, 26CS000183 & 26CS000454"
+        "26CS000064",
+        "26CS000183 & 26CS000454"
       ],
       "eans": [],
       "publishedAt": null,
@@ -73,10 +74,10 @@
     },
     {
       "id": "at-fairhof-chicken-wings-500-g-fairhof-gewuerzte-huehner-unterkeulen-400-g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "FairHOF Chicken Wings, 500 g, FairHOF Gewürzte Hühner Unterkeulen, 400 g",
+      "productName": "FairHOF Chicken Wings, 500 g, FairHOF Gewürzte Hühner Unterkeulen, 400 g",
       "brand": "Hubers Landhendl GmbH",
-      "hazardType": "other",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
         "6152007"
@@ -167,13 +168,13 @@
     },
     {
       "id": "at-tonys-chocolonely-zartbitter-mandel-meersalz",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "Tony's Chocolonely Zartbitter Mandel Meersalz",
+      "productName": "Tony's Chocolonely Zartbitter Mandel Meersalz",
       "brand": "Tony’s Chocolonely",
-      "hazardType": "other",
+      "hazardType": "physical",
       "hazardDescription": null,
       "batchNumbers": [
-        "164 082, 43 46 und 163491"
+        "164 082"
       ],
       "eans": [],
       "publishedAt": null,
@@ -184,14 +185,12 @@
     },
     {
       "id": "at-uwe-zwetschkenroester-in-der-5-1-dose",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "Uwe Zwetschkenröster in der 5/1 Dose",
+      "productName": "Uwe Zwetschkenröster in der 5/1 Dose",
       "brand": "Unterweger Früchteküche GmbH",
-      "hazardType": "other",
+      "hazardType": "physical",
       "hazardDescription": null,
-      "batchNumbers": [
-        "2408015 (Fortlaufende-Nr. 013765 bis 013940 auf Dosendeckel betroffen)"
-      ],
+      "batchNumbers": [],
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/uwe-zwetschkenroester-in-der-5-1-dose",
@@ -231,10 +230,10 @@
     },
     {
       "id": "at-nutrigold-royal-quinoa-500g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "Nutrigold Royal Quinoa 500g",
+      "productName": "Nutrigold Royal Quinoa 500g",
       "brand": "Galleria Internazionale d.o.o.",
-      "hazardType": "other",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
         "PC008081-07"
@@ -248,10 +247,10 @@
     },
     {
       "id": "at-darbo-70-fruchtreich-gartenerdbeere-200-g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "Darbo 70% Fruchtreich Gartenerdbeere 200 g",
+      "productName": "Darbo 70% Fruchtreich Gartenerdbeere 200 g",
       "brand": "A. Darbo AG",
-      "hazardType": "other",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
         "MHD 21.06.2026 L 173 4; MHD 24.06.2026 L 176 4"
@@ -265,10 +264,10 @@
     },
     {
       "id": "at-bio-quendel-gemahlen",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "Bio-Quendel gemahlen",
+      "productName": "Bio-Quendel gemahlen",
       "brand": "St. Hildegard-Posch",
-      "hazardType": "other",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [],
       "eans": [],
@@ -280,10 +279,10 @@
     },
     {
       "id": "at-inzersdorfer-junior-gefluegel-aufstrich-80g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "Inzersdorfer Junior Geflügel Aufstrich 80g",
+      "productName": "Inzersdorfer Junior Geflügel Aufstrich 80g",
       "brand": "Maresi Austria GmbH",
-      "hazardType": "other",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
         "L3102"
@@ -296,45 +295,79 @@
       "foodCategory": "food"
     },
     {
-      "id": "at-1001-delights-dubai-style-schokolade-pistazien-eis-500ml-300g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "De Jongs Ijs",
-      "hazardType": "other",
+      "id": "at-billa-bio-huehnersuppe-6-wuerfel-66g",
+      "title": "BILLA BIO HÜHNERSUPPE 6 WÜRFEL 66G",
+      "productName": "BILLA BIO HÜHNERSUPPE 6 WÜRFEL 66G",
+      "brand": "Landena Wels GmbH",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
-        "D2W50J25R1"
+        "L6090853390",
+        "L6159863933",
+        "L6196870212"
       ],
       "eans": [],
       "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/1001-delights-dubai-style-schokolade-pistazien-eis-500ml-300g",
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-bio-huehnersuppe-6-wuerfel-66g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
     },
     {
-      "id": "at-gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "Gustibus Alimentari S.r.l",
-      "hazardType": "other",
+      "id": "at-freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g-1",
+      "title": "Freshona Bio Beerenmischung erntefrisch tiefgefroren, 300g",
+      "productName": "Freshona Bio Beerenmischung erntefrisch tiefgefroren, 300g",
+      "brand": "Jütro Tiefkühlkost GmbH & Co. KG",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
-        "LG 15/24"
+        "L220226P3",
+        "L220226G3",
+        "L220226Z3",
+        "L220226D3",
+        "L230226D3",
+        "L030326Z3",
+        "L030326H3",
+        "L030326W3",
+        "L150426P3",
+        "L180426H3",
+        "L180426L3",
+        "L190426L3",
+        "L190426N3"
       ],
       "eans": [],
       "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g-1",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g",
+      "title": "Freshona Bio Beerenmischung erntefrisch tiefgefroren, 300g",
+      "productName": "Freshona Bio Beerenmischung erntefrisch tiefgefroren, 300g",
+      "brand": "Jütro Tiefkühlkost GmbH & Co. KG",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "L180426H3",
+        "L180426L3",
+        "L190426L3",
+        "L190426N3"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
     },
     {
       "id": "at-back-mit-mandeln-gerieben-200g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "ting & Analyse",
-      "hazardType": "other",
+      "title": "Back Mit Mandeln gerieben 200g",
+      "productName": "Back Mit Mandeln gerieben 200g",
+      "brand": "IMGRO GmbH",
+      "hazardType": "microbiological",
       "hazardDescription": null,
       "batchNumbers": [
         "L26166V571"
@@ -347,11 +380,58 @@
       "foodCategory": "food"
     },
     {
+      "id": "at-1001-delights-dubai-style-schokolade-pistazien-eis-500ml-300g",
+      "title": "1001 delights Dubai Style Schokolade Pistazien Eis, 500ml/300g",
+      "productName": "1001 delights Dubai Style Schokolade Pistazien Eis, 500ml/300g",
+      "brand": "De Jongs Ijs",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "D2W50J25R1"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/1001-delights-dubai-style-schokolade-pistazien-eis-500ml-300g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-dmbio-cashewmus-himbeere-1",
+      "title": "dmBio Cashewmus Himbeere",
+      "productName": "dmBio Cashewmus Himbeere",
+      "brand": "dm",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/dmbio-cashewmus-himbeere-1",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-dmbio-cashewmus-himbeere",
+      "title": "dmBio Cashewmus Himbeere",
+      "productName": "dmBio Cashewmus Himbeere",
+      "brand": "dm drogerie markt",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/dmbio-cashewmus-himbeere",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
       "id": "at-billa-immer-gut-chili-cheese-nuggets-250g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
+      "title": "BILLA IMMER GUT CHILI CHEESE NUGGETS 250G",
+      "productName": "BILLA IMMER GUT CHILI CHEESE NUGGETS 250G",
       "brand": "GoodLife Foods Boxtel",
-      "hazardType": "other",
+      "hazardType": "physical",
       "hazardDescription": null,
       "batchNumbers": [
         "L5069"
@@ -364,82 +444,18 @@
       "foodCategory": "food"
     },
     {
-      "id": "at-freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "Jütro Tiefkühlkost GmbH & Co. KG",
-      "hazardType": "other",
+      "id": "at-gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
+      "title": "GOURMET FINEST CUISINE Sauce aus Kirschtomaten 360 g",
+      "productName": "GOURMET FINEST CUISINE Sauce aus Kirschtomaten 360 g",
+      "brand": "Gustibus Alimentari S.r.l",
+      "hazardType": "physical",
       "hazardDescription": null,
       "batchNumbers": [
-        "L180426H3, L180426L3, L190426L3 und L190426N3"
+        "LG 15/24"
       ],
       "eans": [],
       "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-dmbio-cashewmus-himbeere",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "dm drogerie markt",
-      "hazardType": "other",
-      "hazardDescription": null,
-      "batchNumbers": [],
-      "eans": [],
-      "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/dmbio-cashewmus-himbeere",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g-1",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "Jütro Tiefkühlkost GmbH & Co. KG",
-      "hazardType": "other",
-      "hazardDescription": null,
-      "batchNumbers": [
-        "L220226P3, L220226G3, L220226Z3, L220226D3, L230226D3, L030326Z3, L030326H3, L030326W3, L150426P3, L180426H3, L180426L3, L190426L3, L190426N3"
-      ],
-      "eans": [],
-      "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/freshona-bio-beerenmischung-erntefrisch-tiefgefroren-300g-1",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-billa-bio-huehnersuppe-6-wuerfel-66g",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "Landena Wels GmbH",
-      "hazardType": "other",
-      "hazardDescription": null,
-      "batchNumbers": [
-        "L6090853390, L6159863933, L6196870212"
-      ],
-      "eans": [],
-      "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-bio-huehnersuppe-6-wuerfel-66g",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-dmbio-cashewmus-himbeere-1",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "ting & Analyse",
-      "hazardType": "other",
-      "hazardDescription": null,
-      "batchNumbers": [],
-      "eans": [],
-      "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/dmbio-cashewmus-himbeere-1",
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
