@@ -5,7 +5,7 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-30T19:01:23.248Z",
+  "generatedAt": "2026-07-30T23:03:41.102Z",
   "updatedBy": "update-at.mjs",
   "alertCount": 27,
   "alerts": [
