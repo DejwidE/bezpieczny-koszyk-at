@@ -74,9 +74,13 @@ async function fetchWithTimeout(url, timeoutMs = 30_000) {
     const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; BezpiecznyKoszyk/1.0; food-safety-monitor)',
-        'Accept': 'text/html,application/xhtml+xml',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'de-AT,de;q=0.9,en;q=0.5',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        // SUPI = TYPO3 cookie consent plugin; wartość {} = brak akceptacji, ale plik jest serwowany
+        'Cookie': 'supi=%7B%7D',
       },
     })
     const text = await res.text()
@@ -454,8 +458,13 @@ async function main() {
   if (evictedCount > 0)
     log(`Usunięto ${evictedCount} alertów starszych niż ${MAX_AGE_DAYS} dni`)
 
-  const existingByUrl = new Set(freshExisting.map(a => a.sourceUrl))
-  log(`Aktywne alerty w bazie: ${freshExisting.length}`)
+  // Alerty listing-only są wykluczone z existingByUrl — będą ponawiane przy każdym runie,
+  // żeby uzupełnić dane szczegółowe gdy strona producenta stanie się dostępna.
+  const existingByUrl = new Set(
+    freshExisting.filter(a => !a.listingOnly).map(a => a.sourceUrl)
+  )
+  const listingOnlyCount = freshExisting.filter(a => a.listingOnly).length
+  log(`Aktywne alerty w bazie: ${freshExisting.length}${listingOnlyCount > 0 ? ` (w tym ${listingOnlyCount} listing-only do ponowienia)` : ''}`)
 
   // 2. Pobierz wszystkie linki do alertów przez paginację
   log(`Pobieranie listy alertów AGES (Lebensmittel, cat=8)...`)
@@ -533,24 +542,49 @@ async function main() {
     if (i > 0) await sleep(REQUEST_DELAY_MS)
 
     let res
+    let fetchFailed = false
     try {
       res = await fetchWithTimeout(entry.fullUrl, 30_000)
     } catch (err) {
       warn(`Błąd sieci dla ${entry.fullUrl}: ${err.message}`)
-      skippedErrors++
-      continue
+      fetchFailed = true
     }
 
-    if (!res.ok) {
+    if (!fetchFailed && !res.ok) {
       warn(`Błąd HTTP ${res.status} dla: ${entry.fullUrl}`)
-      skippedErrors++
-      continue
+      fetchFailed = true
     }
 
-    const top = res.text.slice(0, 500)
-    if (!/<html[\s>]/i.test(top) && !/<!doctype/i.test(top)) {
-      warn(`Nie-HTML odpowiedź dla: ${entry.fullUrl}`)
+    if (!fetchFailed) {
+      const top = res.text.slice(0, 500)
+      if (!/<html[\s>]/i.test(top) && !/<!doctype/i.test(top)) {
+        warn(`Nie-HTML odpowiedź dla: ${entry.fullUrl}`)
+        fetchFailed = true
+      }
+    }
+
+    if (fetchFailed) {
+      // Listing-only fallback — alert z danych z listingu (brak batch numbers / brand).
+      // Zostanie ponowiony przy następnym runie (jest wykluczony z existingByUrl).
       skippedErrors++
+      const fallback = {
+        id:                buildAlertId(entry.slug),
+        title:             entry.title ?? null,
+        productName:       entry.title ?? null,
+        brand:             null,
+        hazardType:        'other',
+        hazardDescription: null,
+        batchNumbers:      [],
+        eans:              [],
+        publishedAt:       entry.date ?? null,
+        sourceUrl:         entry.fullUrl,
+        source:            'ages.at',
+        region:            REGION,
+        foodCategory:      'food',
+        listingOnly:       true,
+      }
+      newAlerts.push(fallback)
+      log(`  → listing-only fallback (strona niedostępna): ${entry.title ?? entry.slug}`)
       continue
     }
 
@@ -577,7 +611,7 @@ async function main() {
     log(`  → hazard: ${alert.hazardType} | produkt: ${alert.productName ?? '(brak)'} | loty: ${alert.batchNumbers.length}`)
   }
 
-  log(`Nowe alerty: ${newAlerts.length} | błędy: ${skippedErrors}`)
+  log(`Nowe alerty: ${newAlerts.length} | błędy/listing-only: ${skippedErrors}`)
 
   if (newAlerts.length === 0 && evictedCount === 0) {
     log('Żadnych nowych alertów do zapisania.')
