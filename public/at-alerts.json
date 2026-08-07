@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-07-30T23:03:41.102Z",
+  "generatedAt": "2026-08-07T00:58:35.804Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 27,
+  "alertCount": 28,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -456,6 +456,21 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-schweinspasteten-aus-tschechien",
+      "title": "Schweinspasteten aus Tschechien",
+      "productName": "Schweinspasteten aus Tschechien",
+      "brand": "*** HOTEL Litovel … srdce Luhačovic",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/schweinspasteten-aus-tschechien",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
