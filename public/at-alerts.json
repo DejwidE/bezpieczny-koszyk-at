@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-08-07T00:58:35.804Z",
+  "generatedAt": "2026-08-11T21:28:51.201Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 28,
+  "alertCount": 30,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -471,6 +471,36 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/schweinspasteten-aus-tschechien",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-noem-mix-vanille-180-g-und-noem-cremix-tiramisu-180-g",
+      "title": "NÖM Mix Vanille, 180 g und NÖM Cremix Tiramisu, 180 g",
+      "productName": "NÖM Mix Vanille, 180 g und NÖM Cremix Tiramisu, 180 g",
+      "brand": "NÖM AG",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/noem-mix-vanille-180-g-und-noem-cremix-tiramisu-180-g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-noem-mix-vanille-180-g",
+      "title": "NÖM Mix Vanille, 180 g",
+      "productName": "NÖM Mix Vanille, 180 g",
+      "brand": "NÖM AG",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/noem-mix-vanille-180-g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
