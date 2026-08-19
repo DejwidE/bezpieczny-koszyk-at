@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-08-11T21:28:51.201Z",
+  "generatedAt": "2026-08-19T21:03:11.109Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 30,
+  "alertCount": 31,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -501,6 +501,21 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/noem-mix-vanille-180-g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-milbona-high-protein-pudding-schoko-200g",
+      "title": "Milbona High Protein Pudding Schoko, 200g",
+      "productName": "Milbona High Protein Pudding Schoko, 200g",
+      "brand": "Fude + Serrahn Milchprodukte GmbH & Co. KG",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/milbona-high-protein-pudding-schoko-200g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
