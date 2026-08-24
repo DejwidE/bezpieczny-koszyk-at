@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-08-19T21:03:11.109Z",
+  "generatedAt": "2026-08-24T09:29:52.232Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 31,
+  "alertCount": 32,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -516,6 +516,23 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/milbona-high-protein-pudding-schoko-200g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-billa-immer-gut-aufstrich-huhn-95g",
+      "title": "BILLA IMMER GUT AUFSTRICH HUHN 95G",
+      "productName": "BILLA IMMER GUT AUFSTRICH HUHN 95G",
+      "brand": "Kreis Industriehandel GmbH",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "9010437031516"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-immer-gut-aufstrich-huhn-95g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
