@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-08-24T09:29:52.232Z",
+  "generatedAt": "2026-08-26T09:24:34.594Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 32,
+  "alertCount": 33,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -533,6 +533,21 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-immer-gut-aufstrich-huhn-95g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-billa-immer-gut-pinsa-500g-und-daraus-hergestellte-rezeptartikel",
+      "title": "BILLA IMMER GUT PINSA 500G und daraus hergestellte Rezeptartikel",
+      "productName": "BILLA IMMER GUT PINSA 500G und daraus hergestellte Rezeptartikel",
+      "brand": "Buratti GmbH",
+      "hazardType": "physical",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-immer-gut-pinsa-500g-und-daraus-hergestellte-rezeptartikel",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
