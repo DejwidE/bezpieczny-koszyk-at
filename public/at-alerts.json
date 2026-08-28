@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-08-26T09:24:34.594Z",
+  "generatedAt": "2026-08-28T20:25:03.717Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 33,
+  "alertCount": 34,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -548,6 +548,23 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/billa-immer-gut-pinsa-500g-und-daraus-hergestellte-rezeptartikel",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-farmers-country-rosinen-500-g",
+      "title": "Farmer's Country Rosinen 500 g",
+      "productName": "Farmer's Country Rosinen 500 g",
+      "brand": "Glatz International GmbH",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "L212-26"
+      ],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/farmers-country-rosinen-500-g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
