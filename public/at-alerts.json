@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-08-28T20:25:03.717Z",
+  "generatedAt": "2026-09-18T13:09:40.788Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 34,
+  "alertCount": 35,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -565,6 +565,21 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/farmers-country-rosinen-500-g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-karfiol-polen-offene-ware",
+      "title": "Karfiol / Polen offene Ware",
+      "productName": "Karfiol / Polen offene Ware",
+      "brand": "Burkhart-früche GmbH",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/karfiol-polen-offene-ware",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
