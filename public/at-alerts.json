@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-09-18T13:09:40.788Z",
+  "generatedAt": "2026-09-30T15:20:00.174Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 35,
+  "alertCount": 36,
   "alerts": [
     {
       "id": "at-par-naturpur-by-neni-bio-hummus-natur-125g",
@@ -580,6 +580,21 @@
       "eans": [],
       "publishedAt": null,
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/karfiol-polen-offene-ware",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
+    {
+      "id": "at-mango-aegypten-offene-ware",
+      "title": "Mango / Ägypten, offene Ware",
+      "productName": "Mangos / Ägypten",
+      "brand": "Green Global Handels FlexCo",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": null,
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/mango-aegypten-offene-ware",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
