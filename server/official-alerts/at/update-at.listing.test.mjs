@@ -1,5 +1,6 @@
 /**
- * Testy listy AGES: data publikacji, paginacja, zestawienie bazy z listą.
+ * Testy listy AGES: data publikacji, paginacja, zestawienie bazy z listą,
+ * usuwanie wpisów wycofanych przez AGES.
  *
  * Uruchomienie (bez dodatkowych pakietów):
  *   node --test server/official-alerts/at/update-at.listing.test.mjs
@@ -12,7 +13,12 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { parseCategoryPage, reconcileExistingWithListing } from './update-at.mjs'
+import {
+  parseCategoryPage,
+  reconcileExistingWithListing,
+  findDelistedCandidates,
+  confirmDelisted,
+} from './update-at.mjs'
 
 const __dir = dirname(fileURLToPath(import.meta.url))
 const PAGE1 = readFileSync(join(__dir, 'test-fixtures/ages-list-page1.html'), 'utf8')
@@ -157,7 +163,63 @@ test('stary wpis, którego AGES już nie pokazuje, jest usuwany', () => {
   assert.deepEqual(r.freshExisting.map(a => a.id), ['at-swiezy'])
 })
 
+test('niepełna lista: limit wieku niczego nie usuwa, daty nadal są uzupełniane', () => {
+  const r = reconcileExistingWithListing(
+    [alert('stary-z-dalszej-strony', '2024-08-23'), alert('bez-daty')],
+    [listed('bez-daty', '2026-09-30')],
+    CUTOFF,
+    { listingComplete: false },
+  )
+  assert.equal(r.evictedCount, 0)
+  assert.equal(r.datesFilled, 1)
+  assert.deepEqual(r.freshExisting.map(a => a.id), ['at-stary-z-dalszej-strony', 'at-bez-daty'])
+})
+
 test('pusta baza i pusta lista nie powodują błędu', () => {
   assert.deepEqual(reconcileExistingWithListing(undefined, [], CUTOFF), { freshExisting: [], datesFilled: 0, evictedCount: 0 })
   assert.deepEqual(reconcileExistingWithListing([alert('a')], undefined, CUTOFF).datesFilled, 0)
+})
+
+// ── Wpisy wycofane przez AGES ───────────────────────────────────────────────
+
+test('kandydaci do usunięcia to wyłącznie wpisy, których nie ma na liście', () => {
+  const base = [alert('na-liscie', '2026-09-30'), alert('zniknal-1'), alert('zniknal-2', '2026-01-01')]
+  const candidates = findDelistedCandidates(base, [listed('na-liscie', '2026-09-30'), listed('nowy', '2026-10-01')])
+  assert.deepEqual(candidates.map(a => a.id), ['at-zniknal-1', 'at-zniknal-2'])
+})
+
+test('wszystkie wpisy na liście albo pusta baza → brak kandydatów', () => {
+  assert.deepEqual(findDelistedCandidates([alert('a')], [listed('a', null)]), [])
+  assert.deepEqual(findDelistedCandidates(undefined, [listed('a', null)]), [])
+  assert.deepEqual(findDelistedCandidates([], undefined), [])
+})
+
+test('usuwany jest tylko wpis, którego strona odpowiada 404 lub 410', async () => {
+  const statuses = { [url('brak-404')]: 404, [url('brak-410')]: 410, [url('jest-200')]: 200, [url('blad-500')]: 500, [url('przekierowanie')]: 301 }
+  const asked = []
+  const gone = await confirmDelisted(
+    Object.keys(statuses).map(u => ({ id: `at-${u.split('/').pop()}`, sourceUrl: u })),
+    async u => { asked.push(u); return statuses[u] },
+  )
+  assert.deepEqual([...gone].sort(), ['at-brak-404', 'at-brak-410'])
+  assert.deepEqual(asked, Object.keys(statuses), 'każda strona sprawdzona raz, po kolei')
+})
+
+test('błąd sieci albo brak statusu → wpis zostaje', async () => {
+  const gone = await confirmDelisted(
+    [alert('timeout'), alert('bez-statusu'), alert('naprawde-404')],
+    async u => {
+      if (u.endsWith('timeout')) throw new Error('Timeout')
+      if (u.endsWith('bez-statusu')) return null
+      return 404
+    },
+  )
+  assert.deepEqual([...gone], ['at-naprawde-404'])
+})
+
+test('brak kandydatów → żadnych zapytań', async () => {
+  let calls = 0
+  const gone = await confirmDelisted([], async () => { calls++; return 404 })
+  assert.equal(gone.size, 0)
+  assert.equal(calls, 0)
 })

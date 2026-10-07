@@ -54,6 +54,7 @@ const SAFETY_THRESHOLD      = 500  // error gdy więcej — prawdopodobny błąd
 const MAX_AGE_DAYS          = 730  // alerty starsze niż 2 lata są usuwane
 const REQUEST_DELAY_MS      = 2000 // crawl throttle
 const MAX_PAGES             = 50   // bezpieczny limit paginacji
+const MAX_DELIST_PER_RUN    = 10   // więcej wpisów spoza listy naraz = podejrzane, nic nie usuwamy
 
 // ── Argumenty CLI ─────────────────────────────────────────────────────────────
 
@@ -393,12 +394,15 @@ function loadExistingDataset() {
  * Zestawia alerty już zapisane w bazie z aktualną listą AGES:
  *  - wpis bez daty dostaje datę publikacji z listy (bez pobierania strony szczegółowej),
  *  - wpis starszy niż `cutoffDate` jest usuwany tylko wtedy, gdy AGES już go nie pokazuje.
+ * Przy niepełnej liście (`listingComplete: false`) nie wiadomo, czy stary wpis jest
+ * jeszcze pokazywany, więc limit wieku niczego nie usuwa.
  *
  * @param {Array<Object>} existingAlerts alerty z poprzedniej bazy
  * @param {Array<{fullUrl: string, date: string|null}>} listedItems wpisy z listy AGES
  * @param {string} cutoffDate granica wieku, 'YYYY-MM-DD'
+ * @param {{listingComplete?: boolean}} [options]
  */
-function reconcileExistingWithListing(existingAlerts, listedItems, cutoffDate) {
+function reconcileExistingWithListing(existingAlerts, listedItems, cutoffDate, { listingComplete = true } = {}) {
   const listedDateByUrl = new Map((listedItems ?? []).map(e => [e.fullUrl, e.date]))
   let datesFilled = 0
   const dated = (existingAlerts ?? []).map(a => {
@@ -408,9 +412,45 @@ function reconcileExistingWithListing(existingAlerts, listedItems, cutoffDate) {
     return { ...a, publishedAt: listedDate }
   })
   const freshExisting = dated.filter(a =>
-    !a.publishedAt || a.publishedAt >= cutoffDate || listedDateByUrl.has(a.sourceUrl)
+    !listingComplete || !a.publishedAt || a.publishedAt >= cutoffDate || listedDateByUrl.has(a.sourceUrl)
   )
   return { freshExisting, datesFilled, evictedCount: dated.length - freshExisting.length }
+}
+
+/**
+ * Wpisy z bazy, których nie ma na aktualnej liście AGES — kandydaci do usunięcia.
+ *
+ * @param {Array<Object>} existingAlerts
+ * @param {Array<{fullUrl: string}>} listedItems wpisy z listy AGES
+ */
+function findDelistedCandidates(existingAlerts, listedItems) {
+  const listedUrls = new Set((listedItems ?? []).map(e => e.fullUrl))
+  return (existingAlerts ?? []).filter(a => a.sourceUrl && !listedUrls.has(a.sourceUrl))
+}
+
+/**
+ * Potwierdza wycofanie wpisu przez AGES: wpis jest do usunięcia tylko wtedy, gdy
+ * jego strona źródłowa odpowiada 404 albo 410. Błąd sieci lub każdy inny status
+ * oznacza, że wpis zostaje w bazie.
+ *
+ * @param {Array<{id: string, sourceUrl: string}>} candidates
+ * @param {(url: string) => Promise<number|null>} fetchStatus zwraca status HTTP strony
+ * @param {number} delayMs przerwa między zapytaniami
+ * @returns {Promise<Set<string>>} id wpisów do usunięcia
+ */
+async function confirmDelisted(candidates, fetchStatus, delayMs = 0) {
+  const gone = new Set()
+  for (let i = 0; i < candidates.length; i++) {
+    if (i > 0 && delayMs > 0) await sleep(delayMs)
+    let status = null
+    try {
+      status = await fetchStatus(candidates[i].sourceUrl)
+    } catch {
+      status = null
+    }
+    if (status === 404 || status === 410) gone.add(candidates[i].id)
+  }
+  return gone
 }
 
 function computeContentHash(alerts) {
@@ -537,13 +577,40 @@ async function main() {
   // dostaje ją bez pobierania strony szczegółowej. Wpis nadal widoczny na liście
   // AGES zostaje w bazie niezależnie od wieku — limit wieku usuwa tylko wpisy,
   // których AGES już nie pokazuje (inaczej byłby przy każdym przebiegu usuwany
-  // i od razu pobierany na nowo).
-  const { freshExisting, datesFilled, evictedCount } =
-    reconcileExistingWithListing(existing.alerts, uniqueItems, cutoffDate)
+  // i od razu pobierany na nowo). Przy niepełnej liście limit wieku nie działa.
+  const listingComplete = !nextUrl   // false: błąd w trakcie albo limit stron
+  const { freshExisting: reconciledExisting, datesFilled, evictedCount } =
+    reconcileExistingWithListing(existing.alerts, uniqueItems, cutoffDate, { listingComplete })
   if (datesFilled > 0)
     log(`Uzupełniono datę publikacji z listy AGES: ${datesFilled} alertów`)
   if (evictedCount > 0)
     log(`Usunięto ${evictedCount} alertów starszych niż ${MAX_AGE_DAYS} dni`)
+
+  // 2c. Usuń wpisy wycofane przez AGES. Wpis znika z bazy tylko wtedy, gdy naraz:
+  //   - lista została przeczytana do końca (bez błędu i bez limitu stron),
+  //   - wpisu nie ma na liście,
+  //   - jego strona źródłowa odpowiada 404/410 (AGES ją usunął).
+  // Przy niepełnej liście albo podejrzanie dużej liczbie wpisów spoza listy
+  // niczego nie usuwamy.
+  let freshExisting = reconciledExisting
+  let delistedCount = 0
+  const delistCandidates = findDelistedCandidates(reconciledExisting, uniqueItems)
+  if (delistCandidates.length > 0 && !listingComplete) {
+    warn(`Lista AGES niepełna — nie sprawdzam ${delistCandidates.length} wpisów spoza listy`)
+  } else if (delistCandidates.length > MAX_DELIST_PER_RUN) {
+    warn(`${delistCandidates.length} wpisów spoza listy AGES (limit ${MAX_DELIST_PER_RUN}) — nic nie usuwam, sprawdź scraper`)
+  } else if (delistCandidates.length > 0) {
+    log(`Wpisy spoza listy AGES do sprawdzenia: ${delistCandidates.length}`)
+    const gone = await confirmDelisted(
+      delistCandidates,
+      async url => (await fetchWithTimeout(url, 30_000)).status,
+      REQUEST_DELAY_MS,
+    )
+    for (const a of delistCandidates)
+      log(`  ${gone.has(a.id) ? 'usunięty (strona AGES nie istnieje)' : 'zostaje (strona AGES nadal dostępna lub błąd sieci)'}: ${a.id}`)
+    freshExisting = reconciledExisting.filter(a => !gone.has(a.id))
+    delistedCount = gone.size
+  }
 
   // Alerty listing-only są wykluczone z existingByUrl — będą ponawiane przy każdym runie,
   // żeby uzupełnić dane szczegółowe gdy strona producenta stanie się dostępna.
@@ -559,7 +626,7 @@ async function main() {
     : uniqueItems.filter(e => !existingByUrl.has(e.fullUrl))
   log(`Do pobrania stron szczegółowych: ${toFetch.length}`)
 
-  if (toFetch.length === 0 && evictedCount === 0 && datesFilled === 0) {
+  if (toFetch.length === 0 && evictedCount === 0 && datesFilled === 0 && delistedCount === 0) {
     log('Brak nowych alertów — dataset jest aktualny.')
     if (!DRY_RUN) {
       const meta = existsSync(META_OUTPUT_PATH)
@@ -653,7 +720,7 @@ async function main() {
 
   log(`Nowe alerty: ${newAlerts.length} | błędy/listing-only: ${skippedErrors}`)
 
-  if (newAlerts.length === 0 && evictedCount === 0 && datesFilled === 0) {
+  if (newAlerts.length === 0 && evictedCount === 0 && datesFilled === 0 && delistedCount === 0) {
     log('Żadnych nowych alertów do zapisania.')
     return
   }
@@ -730,6 +797,8 @@ export {
   stripHtml,
   computeContentHash,
   reconcileExistingWithListing,
+  findDelistedCandidates,
+  confirmDelisted,
 }
 
 // ── CLI ───────────────────────────────────────────────────────────────────────
