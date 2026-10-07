@@ -233,9 +233,15 @@ function parseCategoryPage(html, currentPageUrl) {
       if (titleAttrM) title = titleAttrM[1].replace(/\s+/g, ' ').trim() || null
     }
 
-    // Szukaj daty w okolicach linka (±150 znaków)
-    const context = html.slice(Math.max(0, m.index - 50), m.index + 300)
-    const date = parseGermanDate(context)
+    // Data publikacji stoi w nagłówku sekcji produktu
+    // (<time datetime="30.09.2026">), ok. 1500–2000 znaków PRZED linkiem „Details".
+    // Szukamy jej tylko w tej samej sekcji i tylko w znaczniku <time>: w treści
+    // bywają inne daty (np. termin przydatności), a następny <time> po linku
+    // należy już do kolejnego produktu.
+    const sectionStart = html.lastIndexOf('<section', m.index)
+    const sectionHtml  = sectionStart !== -1 ? html.slice(sectionStart, m.index) : ''
+    const timeM = sectionHtml.match(/<time\b[^>]*\bdatetime="([^"]*)"[^>]*>([^<]*)/i)
+    const date  = timeM ? (parseGermanDate(timeM[1]) ?? parseGermanDate(timeM[2])) : null
 
     items.push({
       slug,
@@ -250,16 +256,19 @@ function parseCategoryPage(html, currentPageUrl) {
   // TYPO3: href="...?tx_agesrecall_pi1%5Bpage%5D=N&cHash=..." (bez cat=8 w URL paginacji)
   const NEXT_PAGE_RE = /href="([^"]*tx_agesrecall_pi1(?:%5B|\[)page(?:%5D|\])=(\d+)[^"]*cHash=[^"]*)"/gi
   let nextPageUrl = null
-  let maxPageNum = 0
+  let nextPageNum = Infinity
 
   // Wyciągnij aktualny numer strony z URL
   const currentPageM = currentPageUrl.match(/tx_agesrecall_pi1(?:%5B|\[)page(?:%5D|\])=(\d+)/)
   const currentPage = currentPageM ? parseInt(currentPageM[1], 10) : 1
 
+  // Następna strona = NAJMNIEJSZY numer większy od bieżącego. Paginacja AGES
+  // pokazuje naraz linki do wszystkich stron (1 2 3 4 5 6), więc wybór największego
+  // numeru przeskakiwał ze strony 1 od razu na ostatnią i pomijał strony pośrednie.
   while ((m = NEXT_PAGE_RE.exec(html)) !== null) {
     const pageNum = parseInt(m[2], 10)
-    if (pageNum > currentPage && pageNum > maxPageNum) {
-      maxPageNum = pageNum
+    if (pageNum > currentPage && pageNum < nextPageNum) {
+      nextPageNum = pageNum
       nextPageUrl = `${BASE_URL}${m[1].replace(/&amp;/g, '&')}`
     }
   }
@@ -380,6 +389,30 @@ function loadExistingDataset() {
   }
 }
 
+/**
+ * Zestawia alerty już zapisane w bazie z aktualną listą AGES:
+ *  - wpis bez daty dostaje datę publikacji z listy (bez pobierania strony szczegółowej),
+ *  - wpis starszy niż `cutoffDate` jest usuwany tylko wtedy, gdy AGES już go nie pokazuje.
+ *
+ * @param {Array<Object>} existingAlerts alerty z poprzedniej bazy
+ * @param {Array<{fullUrl: string, date: string|null}>} listedItems wpisy z listy AGES
+ * @param {string} cutoffDate granica wieku, 'YYYY-MM-DD'
+ */
+function reconcileExistingWithListing(existingAlerts, listedItems, cutoffDate) {
+  const listedDateByUrl = new Map((listedItems ?? []).map(e => [e.fullUrl, e.date]))
+  let datesFilled = 0
+  const dated = (existingAlerts ?? []).map(a => {
+    const listedDate = listedDateByUrl.get(a.sourceUrl)
+    if (a.publishedAt || !listedDate) return a
+    datesFilled++
+    return { ...a, publishedAt: listedDate }
+  })
+  const freshExisting = dated.filter(a =>
+    !a.publishedAt || a.publishedAt >= cutoffDate || listedDateByUrl.has(a.sourceUrl)
+  )
+  return { freshExisting, datesFilled, evictedCount: dated.length - freshExisting.length }
+}
+
 function computeContentHash(alerts) {
   const canonical = JSON.stringify(
     [...alerts]
@@ -448,23 +481,9 @@ export function validateAtAlertsDataset(dataset, { previousAlertCount } = {}) {
 async function main() {
   log(`START — ${new Date().toISOString()} | dry-run=${DRY_RUN} | backfill=${BACKFILL}`)
 
-  // 1. Wczytaj istniejący dataset + wyfiltruj stare alerty
+  // 1. Wczytaj istniejący dataset (daty i filtr wieku — krok 2b, po pobraniu listy)
   const existing      = loadExistingDataset()
   const cutoffDate    = new Date(Date.now() - MAX_AGE_DAYS * 86_400_000).toISOString().slice(0, 10)
-  const freshExisting = (existing.alerts ?? []).filter(a =>
-    !a.publishedAt || a.publishedAt >= cutoffDate
-  )
-  const evictedCount  = (existing.alerts ?? []).length - freshExisting.length
-  if (evictedCount > 0)
-    log(`Usunięto ${evictedCount} alertów starszych niż ${MAX_AGE_DAYS} dni`)
-
-  // Alerty listing-only są wykluczone z existingByUrl — będą ponawiane przy każdym runie,
-  // żeby uzupełnić dane szczegółowe gdy strona producenta stanie się dostępna.
-  const existingByUrl = new Set(
-    freshExisting.filter(a => !a.listingOnly).map(a => a.sourceUrl)
-  )
-  const listingOnlyCount = freshExisting.filter(a => a.listingOnly).length
-  log(`Aktywne alerty w bazie: ${freshExisting.length}${listingOnlyCount > 0 ? ` (w tym ${listingOnlyCount} listing-only do ponowienia)` : ''}`)
 
   // 2. Pobierz wszystkie linki do alertów przez paginację
   log(`Pobieranie listy alertów AGES (Lebensmittel, cat=8)...`)
@@ -513,13 +532,34 @@ async function main() {
     )
   }
 
+  // 2b. Uzupełnij brakujące daty z listy i wyfiltruj stare alerty.
+  // Data publikacji jest na liście AGES, więc wpis zapisany wcześniej bez daty
+  // dostaje ją bez pobierania strony szczegółowej. Wpis nadal widoczny na liście
+  // AGES zostaje w bazie niezależnie od wieku — limit wieku usuwa tylko wpisy,
+  // których AGES już nie pokazuje (inaczej byłby przy każdym przebiegu usuwany
+  // i od razu pobierany na nowo).
+  const { freshExisting, datesFilled, evictedCount } =
+    reconcileExistingWithListing(existing.alerts, uniqueItems, cutoffDate)
+  if (datesFilled > 0)
+    log(`Uzupełniono datę publikacji z listy AGES: ${datesFilled} alertów`)
+  if (evictedCount > 0)
+    log(`Usunięto ${evictedCount} alertów starszych niż ${MAX_AGE_DAYS} dni`)
+
+  // Alerty listing-only są wykluczone z existingByUrl — będą ponawiane przy każdym runie,
+  // żeby uzupełnić dane szczegółowe gdy strona producenta stanie się dostępna.
+  const existingByUrl = new Set(
+    freshExisting.filter(a => !a.listingOnly).map(a => a.sourceUrl)
+  )
+  const listingOnlyCount = freshExisting.filter(a => a.listingOnly).length
+  log(`Aktywne alerty w bazie: ${freshExisting.length}${listingOnlyCount > 0 ? ` (w tym ${listingOnlyCount} listing-only do ponowienia)` : ''}`)
+
   // 3. Wybierz do pobrania: nowe lub wszystkie (--backfill)
   const toFetch = BACKFILL
     ? uniqueItems
     : uniqueItems.filter(e => !existingByUrl.has(e.fullUrl))
   log(`Do pobrania stron szczegółowych: ${toFetch.length}`)
 
-  if (toFetch.length === 0 && evictedCount === 0) {
+  if (toFetch.length === 0 && evictedCount === 0 && datesFilled === 0) {
     log('Brak nowych alertów — dataset jest aktualny.')
     if (!DRY_RUN) {
       const meta = existsSync(META_OUTPUT_PATH)
@@ -613,7 +653,7 @@ async function main() {
 
   log(`Nowe alerty: ${newAlerts.length} | błędy/listing-only: ${skippedErrors}`)
 
-  if (newAlerts.length === 0 && evictedCount === 0) {
+  if (newAlerts.length === 0 && evictedCount === 0 && datesFilled === 0) {
     log('Żadnych nowych alertów do zapisania.')
     return
   }
@@ -689,6 +729,7 @@ export {
   parseGermanDate,
   stripHtml,
   computeContentHash,
+  reconcileExistingWithListing,
 }
 
 // ── CLI ───────────────────────────────────────────────────────────────────────
