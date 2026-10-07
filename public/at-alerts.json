@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-10-07T17:18:07.694Z",
+  "generatedAt": "2026-10-07T18:42:58.918Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 57,
+  "alertCount": 54,
   "alerts": [
     {
       "id": "at-mango-aegypten-offene-ware",
@@ -897,53 +897,6 @@
       "eans": [],
       "publishedAt": "2024-08-23",
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/bio-quendel-gemahlen",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-diverse-made-good-granola-riegel",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "ting & Analyse",
-      "hazardType": "other",
-      "hazardDescription": null,
-      "batchNumbers": [],
-      "eans": [],
-      "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/diverse-made-good-granola-riegel",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-made-good-riegel-aus-denns-biomarkt",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "ting & Analyse",
-      "hazardType": "other",
-      "hazardDescription": null,
-      "batchNumbers": [],
-      "eans": [],
-      "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/made-good-riegel-aus-denns-biomarkt",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-inzersdorfer-junior-gefluegel-aufstrich-80g",
-      "title": "Inzersdorfer Junior Geflügel Aufstrich 80g",
-      "productName": "Inzersdorfer Junior Geflügel Aufstrich 80g",
-      "brand": "Maresi Austria GmbH",
-      "hazardType": "microbiological",
-      "hazardDescription": null,
-      "batchNumbers": [
-        "L3102"
-      ],
-      "eans": [],
-      "publishedAt": null,
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/inzersdorfer-junior-gefluegel-aufstrich-80g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
