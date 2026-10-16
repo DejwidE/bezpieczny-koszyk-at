@@ -5,10 +5,25 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-10-07T18:42:58.918Z",
+  "generatedAt": "2026-10-16T23:01:44.906Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 54,
+  "alertCount": 55,
   "alerts": [
+    {
+      "id": "at-produktwarnung-salmonellen-in-tomaten-aus-zwei-regionen-in-sizilien",
+      "title": "Produktwarnung: Salmonellen in Tomaten aus zwei Regionen in Sizilien",
+      "productName": "Produktwarnung: Salmonellen in Tomaten aus zwei Regionen in Sizilien",
+      "brand": null,
+      "hazardType": "microbiological",
+      "hazardDescription": "Salmonellen",
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": "2026-10-16",
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/produktwarnung-salmonellen-in-tomaten-aus-zwei-regionen-in-sizilien",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
     {
       "id": "at-mango-aegypten-offene-ware",
       "title": "Mango / Ägypten, offene Ware",
