@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-10-16T23:01:44.906Z",
+  "generatedAt": "2026-10-17T22:40:29.057Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 55,
+  "alertCount": 54,
   "alerts": [
     {
       "id": "at-produktwarnung-salmonellen-in-tomaten-aus-zwei-regionen-in-sizilien",
@@ -420,21 +420,6 @@
       "eans": [],
       "publishedAt": "2026-04-23",
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/s-budget-tagliatelle-mit-ei-500g-pasta-alluovo-eierteigwaren",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-hipp-gemueseglaeschen-karotte-mit-kartoffel-190-gramm",
-      "title": "Details",
-      "productName": "warnungen & Produktrückrufe - AGES",
-      "brand": "HiPP",
-      "hazardType": "other",
-      "hazardDescription": null,
-      "batchNumbers": [],
-      "eans": [],
-      "publishedAt": "2026-04-18",
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/hipp-gemueseglaeschen-karotte-mit-kartoffel-190-gramm",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
