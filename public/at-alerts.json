@@ -5,10 +5,25 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-10-17T22:40:29.057Z",
+  "generatedAt": "2026-10-20T13:51:27.165Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 54,
+  "alertCount": 55,
   "alerts": [
+    {
+      "id": "at-lidl-nautica-regenbogen-forellenfilets-natur-125g-und-nautica-regenbogen-forellenfilets-pfeffer-125g",
+      "title": "Lidl „Nautica Regenbogen Forellenfilets Natur, 125g“ und „Nautica Regenbogen Forellenfilets Pfeffer, 125g“",
+      "productName": "Lidl „Nautica Regenbogen Forellenfilets Natur, 125g“ und „Nautica Regenbogen Forellenfilets Pfeffer, 125g“",
+      "brand": "Danforel A/S",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [],
+      "eans": [],
+      "publishedAt": "2026-10-20",
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/lidl-nautica-regenbogen-forellenfilets-natur-125g-und-nautica-regenbogen-forellenfilets-pfeffer-125g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
     {
       "id": "at-produktwarnung-salmonellen-in-tomaten-aus-zwei-regionen-in-sizilien",
       "title": "Produktwarnung: Salmonellen in Tomaten aus zwei Regionen in Sizilien",
