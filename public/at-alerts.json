@@ -5,10 +5,27 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-10-28T00:02:06.747Z",
+  "generatedAt": "2026-10-29T15:33:26.307Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 52,
+  "alertCount": 53,
   "alerts": [
+    {
+      "id": "at-tafeltrauben-kernlos-hell-500g-von-villafrut-srl",
+      "title": "TAFELTRAUBEN KERNLOS HELL 500G (von VILLAFRUT SRL)",
+      "productName": "TAFELTRAUBEN KERNLOS HELL 500G (von VILLAFRUT SRL)",
+      "brand": "Villafrut SRL",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "Pro L 2652541 / GGN 4059883043006"
+      ],
+      "eans": [],
+      "publishedAt": "2026-10-29",
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/tafeltrauben-kernlos-hell-500g-von-villafrut-srl",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
     {
       "id": "at-lidl-nautica-regenbogen-forellenfilets-natur-125g-und-nautica-regenbogen-forellenfilets-pfeffer-125g",
       "title": "Lidl „Nautica Regenbogen Forellenfilets Natur, 125g“ und „Nautica Regenbogen Forellenfilets Pfeffer, 125g“",
