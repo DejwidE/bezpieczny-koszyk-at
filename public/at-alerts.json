@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-10-29T15:33:26.307Z",
+  "generatedAt": "2026-11-01T23:54:40.653Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 53,
+  "alertCount": 52,
   "alerts": [
     {
       "id": "at-tafeltrauben-kernlos-hell-500g-von-villafrut-srl",
@@ -581,24 +581,6 @@
       "eans": [],
       "publishedAt": "2026-01-12",
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/despar-premium-pistaziencreme-200g",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-erweiterung-rueckruf-sapori-amaretti-175-gramm",
-      "title": "Erweiterung Rückruf Sapori Amaretti 175 Gramm",
-      "productName": "Erweiterung Rückruf Sapori Amaretti 175 Gramm",
-      "brand": "H.M. Weihs GmbH",
-      "hazardType": "microbiological",
-      "hazardDescription": "Sapori Amaretti 175 Gramm",
-      "batchNumbers": [
-        "L 355077 2",
-        "L355122 1"
-      ],
-      "eans": [],
-      "publishedAt": "2025-12-12",
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/erweiterung-rueckruf-sapori-amaretti-175-gramm",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
