@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-11-01T23:54:40.653Z",
+  "generatedAt": "2026-11-04T00:54:44.954Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 52,
+  "alertCount": 51,
   "alerts": [
     {
       "id": "at-tafeltrauben-kernlos-hell-500g-von-villafrut-srl",
@@ -469,21 +469,6 @@
       "eans": [],
       "publishedAt": "2026-04-16",
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/vatan-doener-7-kg-tiefkuehl",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-wiesentaler-senningers-frankfurter-nach-landmetzgerart-1-kg",
-      "title": "Wiesentaler Senninger´s Frankfurter nach Landmetzgerart, 1 kg",
-      "productName": "Wiesentaler Senninger´s Frankfurter nach Landmetzgerart, 1 kg",
-      "brand": "Metzgerei Senninger",
-      "hazardType": "microbiological",
-      "hazardDescription": null,
-      "batchNumbers": [],
-      "eans": [],
-      "publishedAt": "2026-04-08",
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/wiesentaler-senningers-frankfurter-nach-landmetzgerart-1-kg",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
