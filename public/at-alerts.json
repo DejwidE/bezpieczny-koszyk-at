@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-11-05T16:51:42.063Z",
+  "generatedAt": "2026-11-12T02:00:34.256Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 54,
+  "alertCount": 53,
   "alerts": [
     {
       "id": "at-alnatura-pinienkerne-60g-und-alnatura-salatkerne-mix-100g",
@@ -815,23 +815,6 @@
       "eans": [],
       "publishedAt": "2025-04-03",
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/gourmet-finest-cuisine-sauce-aus-kirschtomaten-360-g",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-tonys-chocolonely-zartbitter-mandel-meersalz",
-      "title": "Tony's Chocolonely Zartbitter Mandel Meersalz",
-      "productName": "Tony's Chocolonely Zartbitter Mandel Meersalz",
-      "brand": "Tony’s Chocolonely",
-      "hazardType": "physical",
-      "hazardDescription": null,
-      "batchNumbers": [
-        "164 082"
-      ],
-      "eans": [],
-      "publishedAt": "2025-04-01",
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/tonys-chocolonely-zartbitter-mandel-meersalz",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
