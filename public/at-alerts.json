@@ -5,10 +5,27 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-11-12T02:00:34.256Z",
+  "generatedAt": "2026-11-12T17:05:31.754Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 53,
+  "alertCount": 54,
   "alerts": [
+    {
+      "id": "at-finis-feinstes-bio-weizenkeime-150g",
+      "title": "Fini's Feinstes Bio-Weizenkeime (150g)",
+      "productName": "Fini's Feinstes Bio-Weizenkeime (150g)",
+      "brand": "GoodMills Österreich GmbH",
+      "hazardType": "microbiological",
+      "hazardDescription": null,
+      "batchNumbers": [
+        "GM3051 (MHD 03.12.2026); GM3053 (MHD 31.12.2026)"
+      ],
+      "eans": [],
+      "publishedAt": "2026-11-12",
+      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/finis-feinstes-bio-weizenkeime-150g",
+      "source": "ages.at",
+      "region": "AT",
+      "foodCategory": "food"
+    },
     {
       "id": "at-alnatura-pinienkerne-60g-und-alnatura-salatkerne-mix-100g",
       "title": "Alnatura Pinienkerne 60g und Alnatura Salatkerne-Mix 100g",
