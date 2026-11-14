@@ -5,9 +5,9 @@
   "sourceName": "AGES (Agentur für Gesundheit und Ernährungssicherheit)",
   "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe?tx_agesrecall_pi1%5Bcat%5D=8&cHash=b220fb2a107682df91cd9b410621f748",
   "providerId": "AT_AGES",
-  "generatedAt": "2026-11-12T17:05:31.754Z",
+  "generatedAt": "2026-11-14T01:03:21.644Z",
   "updatedBy": "update-at.mjs",
-  "alertCount": 54,
+  "alertCount": 53,
   "alerts": [
     {
       "id": "at-finis-feinstes-bio-weizenkeime-150g",
@@ -714,24 +714,6 @@
       "eans": [],
       "publishedAt": "2025-10-21",
       "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/brilliant-cacao",
-      "source": "ages.at",
-      "region": "AT",
-      "foodCategory": "food"
-    },
-    {
-      "id": "at-clever-popcorn-gesalzen-fuer-die-mikrowelle-3x100g",
-      "title": "CLEVER POPCORN GESALZEN FÜR DIE MIKROWELLE 3x100G",
-      "productName": "CLEVER POPCORN GESALZEN FÜR DIE MIKROWELLE 3x100G",
-      "brand": "Popz Europe Kft.",
-      "hazardType": "microbiological",
-      "hazardDescription": null,
-      "batchNumbers": [
-        "102/MHD 11.04.2026",
-        "L135/MHD 14.05.2026"
-      ],
-      "eans": [],
-      "publishedAt": "2025-10-14",
-      "sourceUrl": "https://www.ages.at/mensch/produktwarnungen-produktrueckrufe/produkt/clever-popcorn-gesalzen-fuer-die-mikrowelle-3x100g",
       "source": "ages.at",
       "region": "AT",
       "foodCategory": "food"
